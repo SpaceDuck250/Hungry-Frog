@@ -9,7 +9,9 @@ public class StickingScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Sticky")
         {
+            transform.parent = collision.transform;
             OnStick?.Invoke();
+            InsectCatcherScript.OnInsectCaught?.Invoke(gameObject);
         }
     }
 }

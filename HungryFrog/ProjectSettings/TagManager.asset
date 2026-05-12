@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Sticky
+  - Frog
   layers:
   - Default
   - TransparentFX

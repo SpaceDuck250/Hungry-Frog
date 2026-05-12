@@ -13,13 +13,14 @@ public class TongueClickManager : MonoBehaviour
 
     private Vector3 destinationPoint;
     private bool canMove = false;
-    private Vector3 lerpValue;
+    private Vector3 lerpVector;
     public float smoothValue;
 
     public Transform stickyPart;
 
     private void Start()
     {
+        lineRenderer.SetPosition(0, tongueOrigin.position);
         LerpTongueToDestination(tongueOrigin.position);
     }
 
@@ -32,16 +33,16 @@ public class TongueClickManager : MonoBehaviour
             return;
         }
 
-        lerpValue = Vector3.Lerp(lerpValue, destinationPoint, Time.deltaTime * smoothValue);
-        SetTongueEndPointTo(lerpValue);
-        SetStickyPartPositionTo(lerpValue);
+        lerpVector = Vector3.Lerp(lerpVector, destinationPoint, Time.deltaTime * smoothValue);
+        SetTongueEndPointTo(lerpVector);
+        SetObjectToDestination(stickyPart, lerpVector);
     }
 
     private void LerpTongueToDestination(Vector3 destination)
     {
         CancelInvoke("RetractTongue");
 
-        lerpValue = tongueOrigin.position;
+        lerpVector = tongueOrigin.position;
 
 
         destinationPoint = destination;
@@ -72,10 +73,10 @@ public class TongueClickManager : MonoBehaviour
         lineRenderer.SetPosition(endpointIndex, destination);
     }
 
-    private void SetStickyPartPositionTo(Vector3 destination)
+    private void SetObjectToDestination(Transform obj, Vector3 destination)
     {
         destination.z = 0;
-        stickyPart.position = destination;
+        obj.position = destination;
     }
 
     private void RetractTongue()
@@ -84,18 +85,16 @@ public class TongueClickManager : MonoBehaviour
         canMove = true;
     }
 
+    //private bool CheckIfReachedDestination()
+    //{
+    //    float difference = (destinationPoint - lerpValue).magnitude;
 
+    //    if (difference <= 0.01f)
+    //    {
+    //        return true;
+    //    }
 
-    private bool CheckIfReachedDestination()
-    {
-        float difference = (destinationPoint - lerpValue).magnitude;
-
-        if (difference <= 0.01f)
-        {
-            return true;
-        }
-
-        return false;
-    }
+    //    return false;
+    //}
 
 }
