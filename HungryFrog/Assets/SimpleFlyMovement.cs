@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SimpleFlyMovement : MonoBehaviour
+public class SimpleFlyMovement : Moveable
 {
     public float yRange;
     public float xRange;
@@ -13,6 +13,16 @@ public class SimpleFlyMovement : MonoBehaviour
     private Vector3 destination;
 
     private void Update()
+    {
+        if (!canMove)
+        {
+            return;
+        }
+
+        Move();
+    }
+
+    public override void Move()
     {
         MoveAboutRandomly();
     }

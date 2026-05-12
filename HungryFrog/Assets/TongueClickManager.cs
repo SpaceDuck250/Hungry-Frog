@@ -7,13 +7,51 @@ public class TongueClickManager : MonoBehaviour
 
     public Vector3 mousePos;
 
-    public GameObject tongueParent;
-    public GameObject tongue;
+    public LineRenderer lineRenderer;
+
+    public Transform tongueOrigin;
+
+    private Vector3 destinationPoint;
+    private bool canMove = false;
+    private Vector3 lerpValue;
+    public float smoothValue;
+
+    public Transform stickyPart;
+
+    private void Start()
+    {
+        LerpTongueToDestination(tongueOrigin.position);
+    }
 
     private void Update()
     {
-       
+        CheckInput();
 
+        if (!canMove)
+        {
+            return;
+        }
+
+        lerpValue = Vector3.Lerp(lerpValue, destinationPoint, Time.deltaTime * smoothValue);
+        SetTongueEndPointTo(lerpValue);
+        SetStickyPartPositionTo(lerpValue);
+    }
+
+    private void LerpTongueToDestination(Vector3 destination)
+    {
+        CancelInvoke("RetractTongue");
+
+        lerpValue = tongueOrigin.position;
+
+
+        destinationPoint = destination;
+        canMove = true;
+
+        Invoke("RetractTongue", 1);
+    }
+
+    private void CheckInput()
+    {
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -21,31 +59,43 @@ public class TongueClickManager : MonoBehaviour
 
             if (touch.phase == TouchPhase.Began)
             {
-                ShootTongue(mousePos);
+                LerpTongueToDestination(mousePos);
             }
         }
     }
 
-    private void ShootTongue(Vector3 destination)
+    private void SetTongueEndPointTo(Vector3 destination)
     {
-        Vector2 angleVector = destination - tongueParent.transform.position;
-        float turnAngle = Mathf.Atan2(angleVector.y, angleVector.x) * Mathf.Rad2Deg;
+        destination.z = 0;
 
-        float offset = 90;
-        turnAngle += offset;
-
-        Quaternion qAngle = Quaternion.Euler(0, 0, turnAngle);
-
-        tongueParent.transform.localRotation = qAngle;
-
-        float distance = Vector2.Distance(destination, tongueParent.transform.position);
-
-        float baseLength = 2.82f;
-        float scaleFactorY = distance / baseLength;
-
-        tongueParent.transform.localScale = new Vector3(tongueParent.transform.localScale.x, scaleFactorY, tongueParent.transform.localScale.z);
-
-
-
+        int endpointIndex = 1;
+        lineRenderer.SetPosition(endpointIndex, destination);
     }
+
+    private void SetStickyPartPositionTo(Vector3 destination)
+    {
+        destination.z = 0;
+        stickyPart.position = destination;
+    }
+
+    private void RetractTongue()
+    {
+        destinationPoint = tongueOrigin.position;
+        canMove = true;
+    }
+
+
+
+    private bool CheckIfReachedDestination()
+    {
+        float difference = (destinationPoint - lerpValue).magnitude;
+
+        if (difference <= 0.01f)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 }
