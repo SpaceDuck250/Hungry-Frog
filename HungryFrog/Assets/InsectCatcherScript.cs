@@ -45,5 +45,7 @@ public class InsectCatcherScript : MonoBehaviour
             Destroy(insect);
             OnInsectEaten?.Invoke();
         }
+
+        caughtInsectList.Clear();
     }
 }

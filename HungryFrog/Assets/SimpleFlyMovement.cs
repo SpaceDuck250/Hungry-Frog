@@ -43,9 +43,11 @@ public class SimpleFlyMovement : Moveable
     private Vector3 GetNewPositionOffset()
     {
         float x = Random.Range(-xRange, xRange);
+        x = Mathf.Round(x * 100f) / 100f;
         float y = Random.Range(-yRange, yRange);
+        y = Mathf.Round(y * 100f) / 100f;
 
-        Vector3 positionOffset = new Vector3(x, y, transform.position.z);
+        Vector3 positionOffset = new Vector3(x, y, 0);
         return positionOffset; 
     }
 }

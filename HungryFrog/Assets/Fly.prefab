@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 7142440157485959378}
   - component: {fileID: 5385278441081483196}
   - component: {fileID: 3090786780338821797}
+  - component: {fileID: 543244885254281623}
   m_Layer: 0
   m_Name: Fly
-  m_TagString: Untagged
+  m_TagString: Bug
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -181,3 +182,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stickScript: {fileID: 7142440157485959378}
   moveScript: {fileID: 1093253614594428022}
+--- !u!114 &543244885254281623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470831141402642916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6628a0bb08c87c2468f523363bc4b92e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
