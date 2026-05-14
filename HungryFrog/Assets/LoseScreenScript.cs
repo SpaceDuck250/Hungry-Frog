@@ -7,6 +7,7 @@ public class LoseScreenScript : MonoBehaviour
 
     private void Start()
     {
+        loseScreen = transform.Find("LoseScreen").gameObject;
         HungerScript.OnPlayerLose += OnPlayerLose;
     }
 
@@ -22,7 +23,10 @@ public class LoseScreenScript : MonoBehaviour
 
     private void ShowLoseScreen()
     {
-        loseScreen.SetActive(true);
+        if (loseScreen != null)
+        {
+            loseScreen.SetActive(true);
+        }
     }
 
     public void RestartGame()
