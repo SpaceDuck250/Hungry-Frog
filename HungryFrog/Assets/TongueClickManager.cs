@@ -18,6 +18,8 @@ public class TongueClickManager : MonoBehaviour
 
     public Transform stickyPart;
 
+    public bool canShoot = true;
+
     private void Start()
     {
         lineRenderer.SetPosition(0, tongueOrigin.position);
@@ -26,6 +28,7 @@ public class TongueClickManager : MonoBehaviour
 
     private void Update()
     {
+
         CheckInput();
 
         if (!canMove)
@@ -53,6 +56,11 @@ public class TongueClickManager : MonoBehaviour
 
     private void CheckInput()
     {
+        if (!canShoot)
+        {
+            return;
+        }
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -61,6 +69,7 @@ public class TongueClickManager : MonoBehaviour
             if (touch.phase == TouchPhase.Began)
             {
                 LerpTongueToDestination(mousePos);
+                canShoot = false;
             }
         }
     }
@@ -83,6 +92,8 @@ public class TongueClickManager : MonoBehaviour
     {
         destinationPoint = tongueOrigin.position;
         canMove = true;
+
+        canShoot = true;
     }
 
     //private bool CheckIfReachedDestination()

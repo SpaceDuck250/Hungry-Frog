@@ -8,9 +8,11 @@ public class HungerScript : MonoBehaviour
     private float hungerLeft;
     public float maxHunger;
 
-    public static event Action OnPlayerLose;
+    public static Action OnPlayerLose;
 
     public Image hungerBar;
+
+    public float decreaseRate = 1;
 
     private void Start()
     {
@@ -24,7 +26,7 @@ public class HungerScript : MonoBehaviour
 
     private void DecreaseHungerOverTime()
     {
-        hungerLeft -= Time.deltaTime;
+        hungerLeft -= Time.deltaTime * decreaseRate;
         if (hungerLeft <= 0)
         {
             hungerLeft = 0;
